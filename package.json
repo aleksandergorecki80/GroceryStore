@@ -1,0 +1,15 @@
+{
+  "name": "grocerystore",
+  "version": "1.0.0",
+  "description": "The website with groceries for sale.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm start --prefix client"
+  },
+  "author": "Aleksander Gorecki",
+  "license": "ISC",
+  "dependencies": {
+    "react-router-dom": "^5.2.1"
+  }
+}
