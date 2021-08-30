@@ -5,11 +5,18 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "npm start --prefix client"
+    "client": "npm start --prefix client",
+    "dev-server": "SET \"NODE_ENV=dev\"&& nodemon server.js",
+    "dev": "concurrently \"npm run dev-server\" \"npm run client\""
   },
   "author": "Aleksander Gorecki",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "react-router-dom": "^5.2.1"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1",
+    "nodemon": "^2.0.12"
   }
 }

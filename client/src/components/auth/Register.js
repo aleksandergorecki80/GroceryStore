@@ -1,26 +1,44 @@
 import React, { useState } from 'react';
+import { Input, Button } from 'semantic-ui-react';
+
 
 const Register = () => {
 
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        repeatPassword: ''
-    });
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
 
-    const onChange = (event) => {
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value.trim()
-        })
+    const [nameError, setNameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [repeatPasswordError, setRepeatPasswordError] = useState(false);
+
+
+    const onChangeName = (event) => {
+        validateName(event.target.value) ? setNameError(false) : setNameError(true);
+        setName(event.target.value);
+    }
+
+    const onChangeEmail = (event) => {
+        validateEmail(event.target.value) ? setEmailError(false) : setEmailError(true);
+        setEmail(event.target.value);
+    }
+
+    const onChangePassword = (event) => {
+        validatePasswords(event.target.value) ? setPasswordError(false) : setPasswordError(true);
+        setPassword(event.target.value);
+    }
+
+    const onChangeRepeatPassword = (event) => {
+        validatePasswords(event.target.value) ? setRepeatPasswordError(false) : setRepeatPasswordError(true);
+        setRepeatPassword(event.target.value);
     }
 
     const onSubmit = (event) => {
         event.preventDefault();
-
-        validateName() ? console.log('ok') : console.log('not ok')
         
+        // SENDING FORM
         
     }
 
@@ -31,41 +49,57 @@ const Register = () => {
         password: /^[\w@-]{8,20}$/i, // w - any character a-z, A-Z, 0-9, including the _
       };
 
-    const validateName = () => {
-        return regExPatterns.name.test(formData.name);
+    const validateName = (phrase) => {
+        return regExPatterns.name.test(phrase);
+    }
+
+    const validateEmail = (phrase) => {
+        return regExPatterns.email.test(phrase);
+    }
+
+    const validatePasswords = (phrase) => {
+        return regExPatterns.password.test(phrase);
     }
 
     return (
         <div>
             <form onSubmit={(event) => onSubmit(event)}>
-                <input
-                    placeholder="Nnter Name"
+                <Input
+                    error = { nameError ? true : false}
+                    placeholder="Enter Name"
                     type="text"
                     name="name"
-                    onChange={(event) => onChange(event)}
+                    onChange={(event) => onChangeName(event)}
                 >
-                </input>
-                <input 
+                </Input>
+                <Input
+                    error = { emailError ? true : false} 
                     placeholder="Enter email"
                     type="email"
                     name="email"
-                    onChange={(event) => onChange(event)}
-                ></input>
-                <input 
+                    onChange={(event) => onChangeEmail(event)}
+                ></Input>
+                <Input
+                    error = { passwordError ? true : false} 
                     placeholder="Enter password"
                     type="password"
                     name="password"
-                    onChange={(event) => onChange(event)}
+                    onChange={(event) => onChangePassword(event)}
                 >
-                </input>
-                <input 
+                </Input>
+                <Input 
+                    error = { repeatPasswordError ? true : false}
                     placeholder="Repeat password"
                     type="password"
                     name="repeatPassword"
-                    onChange={(event) => onChange(event)}
+                    onChange={(event) => onChangeRepeatPassword(event)}
                 >
-                </input>
-                <button type="submit">Submit</button>
+                </Input>
+                <Button 
+                    type="submit"
+                    basic 
+                    color='green'
+                >Submit</Button>
             </form>
         </div>
     );
