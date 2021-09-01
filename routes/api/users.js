@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const jwtSecret = config.get('jwtSecret');
 const emailData = config.get('emailData');
+const host = config.get('host');
 const bcypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 
@@ -45,15 +46,14 @@ router.post('/', async (req, res) => {
                 if(err) throw err;
 
                 // Sending an confirmation email
-                const url = `http://localhost:3000/confirmation/${token}`
+                const url = `${host}/api/users/confirmation/${token}`
                 const output = `
-                    <p>You have a new contact request</p>
-                    <h3>Contact details:</h3>
+                    <p>You created a new accound successfully.</p>
+                    <h3>Your data:</h3>
                     <ul>
                         <li>Name: ${req.body.name}</li>
                         <li>Email: ${req.body.email}</li>
                     </ul>
-                    <h3>Message</h3>
                     <p>Please click the link: <a href="${url}">${url}</a> to confirm your email adress</p>
                 `;
                 // async..await is not allowed in global scope, must use a wrapper
@@ -86,6 +86,11 @@ router.post('/', async (req, res) => {
         console.error(err.message);
         return res.status(500).send('Server error');
     }
+});
+
+router.get('/confirmation/:token', async (req, res) => {
+    console.log('confirmation')
+    res.send('confirmation success');
 });
 
 module.exports = router;
