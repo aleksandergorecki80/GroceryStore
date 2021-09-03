@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/userActions';
 import { Input, Button } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
-
-const Register = () => {
+const Register = (props) => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -38,8 +40,18 @@ const Register = () => {
     const onSubmit = (event) => {
         event.preventDefault();
         
+        if(password !== repeatPassword) return;
+        if( nameError || emailError || passwordError || repeatPasswordError ) return;
+
         // SENDING FORM
-        
+
+        const formData = {
+            name,
+            email,
+            password
+        }
+        props.registerUser(formData);
+        console.log('sending form')
     }
 
     const regExPatterns = {
@@ -105,4 +117,18 @@ const Register = () => {
     );
 };
 
-export default Register;
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        registerUser: (formData) => {
+            dispatch(registerUser(formData));
+        }
+    }
+}
+
+Register.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+}
+
+export default connect(null, mapDispatchToProps)(Register);
