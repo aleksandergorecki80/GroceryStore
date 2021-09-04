@@ -5,7 +5,7 @@ import {
     REGISTER_FAIL
 } from './constants';
 
-
+import { setAlert } from './alertActions';
 
 // REGISTER USER
 
@@ -28,7 +28,10 @@ export const registerUser = ({ name, email, password}) => {
     return async (dispatch) => {
         try {
             const res = await axios.post('/api/users', body, config);
-            console.log(res)
+            console.log(res, 'res');
+            dispatch(registerSuccess(res.data.user));
+            dispatch(setAlert(res.data.message))
+            
         } catch (err) {
             dispatch(registerFail());
         }

@@ -1,15 +1,20 @@
-import { REGISTER_FAIL } from '../actions/constants';
+import { REGISTER_FAIL,
+         REGISTER_SUCCESS,    
+            } from '../actions/constants';
 
 const initialState = {
     token: null,
-    isAuthenticated: false
+    isAuthenticated: false,
+    userData: null
 };
 
 const userReducer = (state = initialState, action) => {
-    console.log('userReducer');
-    
-
     switch (action.type){
+        case REGISTER_SUCCESS:
+            return {
+                ...state,
+                userData: action.payload
+            }
         case REGISTER_FAIL:
             return {
                 token: null,

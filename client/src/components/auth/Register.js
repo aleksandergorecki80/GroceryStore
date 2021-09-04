@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/userActions';
 import { Input, Button } from 'semantic-ui-react';
@@ -16,6 +17,10 @@ const Register = (props) => {
     const [passwordError, setPasswordError] = useState(false);
     const [repeatPasswordError, setRepeatPasswordError] = useState(false);
 
+
+    if(props.user.userData){
+        return <Redirect to="/confirm" />
+    }
 
     const onChangeName = (event) => {
         validateName(event.target.value) ? setNameError(false) : setNameError(true);
@@ -73,6 +78,8 @@ const Register = (props) => {
         return regExPatterns.password.test(phrase);
     }
 
+
+
     return (
         <div>
             <form onSubmit={(event) => onSubmit(event)}>
@@ -127,8 +134,14 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        user: state.userReducer
+    }
+}
+
 Register.propTypes = {
     registerUser: PropTypes.func.isRequired,
 }
 
-export default connect(null, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
