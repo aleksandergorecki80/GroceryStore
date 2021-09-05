@@ -38,15 +38,13 @@ router.post('/', async (req, res) => {
             }
         }
 
-
-
         jwt.sign(payload, jwtSecret,
             { expiresIn: 3600 },
             (err, token) => {
                 if(err) throw err;
 
                 // Sending an confirmation email
-                const url = `${host}/api/users/confirmation/${token}`
+                const url = `${host}/confirmation/${token}`
                 const output = `
                     <p>You created a new accound successfully.</p>
                     <h3>Your data:</h3>
@@ -80,7 +78,14 @@ router.post('/', async (req, res) => {
                     console.log("Message sent: %s", info.messageId);
                 }
                 main().catch(console.error);
-                return res.json( { token });
+                const userData = {
+                    name,
+                    email
+                }
+                return res.json( { 
+                    user: userData,
+                    message: 'Check your email to finish registration.'
+                });
             });
     } catch(err) {
         console.error(err.message);
@@ -88,9 +93,21 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/confirmation/:token', async (req, res) => {
-    console.log('confirmation')
-    res.send('confirmation success');
+// @route   PUT api/users/confirmation
+// @desc    Confirm a user's email adress
+// @access  Private
+
+router.put('/confirmation/', async (req, res) => {
+
+    try {
+
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).send('Server error');
+    }
+
+    console.log('confirmation token = ', req.body.token)
+    res.json( { message: 'Confirmation succeeded.' } );
 });
 
 module.exports = router;

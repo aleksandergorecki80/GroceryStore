@@ -2,13 +2,21 @@ import axios from 'axios';
 
 import {
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    CONFIRMATION_SUCCESS
 } from './constants';
 
 import { setAlert } from './alertActions';
 
-// REGISTER USER
+// JSON Headers
+const config = {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+}
 
+
+// REGISTER USER
 const registerSuccess = (payload) => {
     return { type: REGISTER_SUCCESS, payload}
 }
@@ -18,11 +26,6 @@ const registerFail = () => {
 }
 
 export const registerUser = ({ name, email, password}) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
     const body = JSON.stringify({ name, email, password });
 
     return async (dispatch) => {
@@ -34,6 +37,23 @@ export const registerUser = ({ name, email, password}) => {
             
         } catch (err) {
             dispatch(registerFail());
+        }
+    }
+}
+
+// CONFIRMATION
+const confirmationSuccess = (token) =>{
+    return { type: CONFIRMATION_SUCCESS, token}
+}
+
+export const confirmation = (token) => {
+    const body = { token };
+    return async (dispatch) => {
+        try {
+            console.log(body, 'body')
+            const res = await axios.put('/api/users/confirmation', body, config);
+        } catch (err) {
+            console.log(err);
         }
     }
 }
