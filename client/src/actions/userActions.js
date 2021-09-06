@@ -31,7 +31,6 @@ export const registerUser = ({ name, email, password}) => {
     return async (dispatch) => {
         try {
             const res = await axios.post('/api/users', body, config);
-            console.log(res, 'res');
             dispatch(registerSuccess(res.data.user));
             dispatch(setAlert(res.data.message))
             
@@ -42,18 +41,20 @@ export const registerUser = ({ name, email, password}) => {
 }
 
 // CONFIRMATION
-const confirmationSuccess = (token) =>{
-    return { type: CONFIRMATION_SUCCESS, token}
+const confirmationSuccess = () =>{
+    return { type: CONFIRMATION_SUCCESS }
 }
 
 export const confirmation = (token) => {
     const body = { token };
     return async (dispatch) => {
         try {
-            console.log(body, 'body')
             const res = await axios.put('/api/users/confirmation', body, config);
+            console.log(res)
+            dispatch(confirmationSuccess());
+            dispatch(setAlert(res.data.message));
         } catch (err) {
-            console.log(err);
+            console.log(err.message);
         }
     }
 }

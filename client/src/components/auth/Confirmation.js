@@ -7,8 +7,8 @@ const Confirmation = ({ confirmation }) => {
     const url = window.location.href;
     const worlds = url.split('/');
     const token = worlds[worlds.length-1];
-    console.log('token is ', typeof token);
     confirmation(token);
+
     return (
         <div>
             confirmation token : {token}
@@ -20,6 +20,8 @@ const Confirmation = ({ confirmation }) => {
 Confirmation.propTypes = {
     confirmation: PropTypes.func.isRequired,
 }
+
+
 
 const mapDispatchToProps = (dispatch) => {
     return {

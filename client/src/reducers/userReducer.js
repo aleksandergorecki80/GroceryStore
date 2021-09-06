@@ -1,5 +1,6 @@
 import { REGISTER_FAIL,
-         REGISTER_SUCCESS,    
+         REGISTER_SUCCESS,
+         CONFIRMATION_SUCCESS    
             } from '../actions/constants';
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
     switch (action.type){
         case REGISTER_SUCCESS:
+        case CONFIRMATION_SUCCESS:
             return {
                 ...state,
                 userData: action.payload

@@ -8,6 +8,7 @@ const emailData = config.get('emailData');
 const host = config.get('host');
 const bcypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
+const { findOne } = require('../../models/UserModel');
 
 
 // @route   POST api/users
@@ -34,7 +35,7 @@ router.post('/', async (req, res) => {
         // Generating JSON Web Token
         const payload = {
             user: {
-                id: user._id
+                _id: user._id
             }
         }
 
@@ -98,16 +99,25 @@ router.post('/', async (req, res) => {
 // @access  Private
 
 router.put('/confirmation/', async (req, res) => {
-
+    // Verify token
     try {
-
+        const decoded = jwt.verify(req.body.token, jwtSecret);
+        const updateUser = await User.updateOne( { _id: decoded.user._id }, {$set: { isConfirmed: true }});
+        // Check the user
+        if(!updateUser) {
+            return res.status(400).json({
+                message: "User not found."
+            });
+        }
+        const user = await User.findOne({ _id: decoded.user._id}, { name: 1, email: 1, isConfirmed: 1, _id: 0 });
+        res.json({ 
+            user,
+            message: 'User confirmation succeded. Please log in.'
+        });
     } catch (err) {
         console.error(err.message);
         return res.status(500).send('Server error');
     }
-
-    console.log('confirmation token = ', req.body.token)
-    res.json( { message: 'Confirmation succeeded.' } );
 });
 
 module.exports = router;
