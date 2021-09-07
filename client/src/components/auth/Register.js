@@ -56,7 +56,6 @@ const Register = (props) => {
             password
         }
         props.registerUser(formData);
-        console.log('sending form')
     }
 
     const regExPatterns = {

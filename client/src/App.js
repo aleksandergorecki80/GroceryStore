@@ -4,10 +4,12 @@ import Register from './components/auth/Register';
 import Navbar from './components/layout/Navbar';
 import Confirmation from './components/auth/Confirmation';
 import Confirm from './components/auth/Confirm';
+import Login from './components/auth/Login';
 
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
+
 
 
 const App = () => {
@@ -20,6 +22,7 @@ const App = () => {
             <Route exact path="/confirmation/:token" component={Confirmation} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/confirm" component={Confirm} />
+            <Route exact path="/login" component={Login} />
           </Switch>
         </Fragment>
       </Router>

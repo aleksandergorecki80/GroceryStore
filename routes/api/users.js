@@ -14,7 +14,6 @@ const { findOne } = require('../../models/UserModel');
 // @route   POST api/users
 // @desc    Register user
 // @access  Public
-
 router.post('/', async (req, res) => {
     
     const { name, email, password } = req.body;
@@ -97,7 +96,6 @@ router.post('/', async (req, res) => {
 // @route   PUT api/users/confirmation
 // @desc    Confirm a user's email adress
 // @access  Private
-
 router.put('/confirmation/', async (req, res) => {
     // Verify token
     try {
@@ -112,12 +110,19 @@ router.put('/confirmation/', async (req, res) => {
         const user = await User.findOne({ _id: decoded.user._id}, { name: 1, email: 1, isConfirmed: 1, _id: 0 });
         res.json({ 
             user,
-            message: 'User confirmation succeded. Please log in.'
+            message: 'User confirmation succeded.'
         });
     } catch (err) {
         console.error(err.message);
         return res.status(500).send('Server error');
     }
+});
+
+// @route   PUT api/users
+// @desc    Log in a user and get token
+// @access  Public
+router.post('/', async (req, res) => {
+    res.json({ message: 'Login route'});
 });
 
 module.exports = router;

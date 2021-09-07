@@ -41,8 +41,8 @@ export const registerUser = ({ name, email, password}) => {
 }
 
 // CONFIRMATION
-const confirmationSuccess = () =>{
-    return { type: CONFIRMATION_SUCCESS }
+const confirmationSuccess = (payload) =>{
+    return { type: CONFIRMATION_SUCCESS, payload }
 }
 
 export const confirmation = (token) => {
@@ -51,7 +51,7 @@ export const confirmation = (token) => {
         try {
             const res = await axios.put('/api/users/confirmation', body, config);
             console.log(res)
-            dispatch(confirmationSuccess());
+            dispatch(confirmationSuccess(res.data.user));
             dispatch(setAlert(res.data.message));
         } catch (err) {
             console.log(err.message);
