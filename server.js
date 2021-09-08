@@ -4,6 +4,7 @@ const app = express();
 
 // Import routes
 const users = require('./routes/api/users');
+const auth = require('./routes/api/auth');
 
 // Connect DB
 connectDB();
@@ -14,6 +15,7 @@ app.use(express.json({ extended: false }));
 
 // Define routes
 app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 console.log(process.env.NODE_ENV)
 

@@ -3,7 +3,9 @@ import axios from 'axios';
 import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
-    CONFIRMATION_SUCCESS
+    CONFIRMATION_SUCCESS,
+    CONFIRMATION_FAIL
+
 } from './constants';
 
 import { setAlert } from './alertActions';
@@ -32,7 +34,7 @@ export const registerUser = ({ name, email, password}) => {
         try {
             const res = await axios.post('/api/users', body, config);
             dispatch(registerSuccess(res.data.user));
-            dispatch(setAlert(res.data.message))
+            dispatch(setAlert(res.data.message));
             
         } catch (err) {
             dispatch(registerFail());
@@ -42,7 +44,11 @@ export const registerUser = ({ name, email, password}) => {
 
 // CONFIRMATION
 const confirmationSuccess = (payload) =>{
-    return { type: CONFIRMATION_SUCCESS, payload }
+    return { type: CONFIRMATION_SUCCESS, payload };
+}
+
+const confirmationFail = () => {
+    return { type: CONFIRMATION_FAIL };
 }
 
 export const confirmation = (token) => {
@@ -55,6 +61,8 @@ export const confirmation = (token) => {
             dispatch(setAlert(res.data.message));
         } catch (err) {
             console.log(err.message);
+            confirmationFail();
+            dispatch(setAlert('Confirmation failed'));
         }
     }
 }

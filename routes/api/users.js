@@ -6,7 +6,7 @@ const config = require('config');
 const jwtSecret = config.get('jwtSecret');
 const emailData = config.get('emailData');
 const host = config.get('host');
-const bcypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const { findOne } = require('../../models/UserModel');
 
@@ -26,8 +26,8 @@ router.post('/', async (req, res) => {
         });
         
         // Encrypting the password
-        const salt = await bcypt.genSalt(10);
-        user.password = await bcypt.hash(password, salt);
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
 
         await User.create(user);
 
@@ -116,13 +116,6 @@ router.put('/confirmation/', async (req, res) => {
         console.error(err.message);
         return res.status(500).send('Server error');
     }
-});
-
-// @route   PUT api/users
-// @desc    Log in a user and get token
-// @access  Public
-router.post('/', async (req, res) => {
-    res.json({ message: 'Login route'});
 });
 
 module.exports = router;

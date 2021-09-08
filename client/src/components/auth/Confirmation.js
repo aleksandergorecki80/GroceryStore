@@ -13,13 +13,21 @@ const Confirmation = ({ confirmation, alerts, user }) => {
         confirmation(token);
     }, [confirmation]);
 
-    return (
-        <div>
+       
+    if(!user.userData){
+        return (
+            <div>
+                <p>{alerts[0]}</p>
+                <Link to='/register'>Please register</Link>
+            </div>
+        )}
+        else {
+            return (<div>
             <p>{alerts[0]}</p>
             <Link to='/login'>Please log in</Link>
-        </div>
-    );
-};
+        </div> )
+        }
+    };
 
 
 Confirmation.propTypes = {
