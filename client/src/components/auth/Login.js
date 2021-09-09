@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Input, Button } from 'semantic-ui-react';
+import { loginUser } from '../../actions/userActions';
 
-const Login = ({ user }) => {
+const Login = ({ user, loginUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -44,6 +45,7 @@ const Login = ({ user }) => {
           email,
           password
       }
+      loginUser(formData);
   }
 
   return (
@@ -76,8 +78,17 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginUser: (formData) => {
+      dispatch(loginUser(formData));
+    }
+  }
+}
+
 Login.propTypes = {
   user: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
