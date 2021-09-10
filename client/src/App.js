@@ -5,10 +5,12 @@ import Navbar from './components/layout/Navbar';
 import Confirmation from './components/auth/Confirmation';
 import Confirm from './components/auth/Confirm';
 import Login from './components/auth/Login';
+import Dashboard from './components/dashboard/Dashboard';
 
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
+
 
 
 
@@ -23,6 +25,7 @@ const App = () => {
             <Route exact path="/register" component={Register} />
             <Route exact path="/confirm" component={Confirm} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/dashboard" component={Dashboard} />
           </Switch>
         </Fragment>
       </Router>

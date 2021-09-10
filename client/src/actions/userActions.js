@@ -6,10 +6,15 @@ import {
     CONFIRMATION_SUCCESS,
     CONFIRMATION_FAIL,
     LOGIN_SUCCESS,
-    LOGIN_FAIL
+    LOGIN_FAIL,
+    USER_LOADED,
+    USER_LOADING_FAIL
 } from './constants';
 
 import { setAlert } from './alertActions';
+
+import setAutchToken from '../utils/setAuthToken';
+
 
 // JSON Headers
 const config = {
@@ -57,7 +62,6 @@ export const confirmation = (token) => {
     return async (dispatch) => {
         try {
             const res = await axios.put('/api/users/confirmation', body, config);
-            console.log(res)
             dispatch(confirmationSuccess(res.data.user));
             dispatch(setAlert(res.data.message));
         } catch (err) {
@@ -84,10 +88,36 @@ export const loginUser = (formData) => {
         try {
             const res = await axios.post('/api/auth', body, config);
             dispatch(loginSuccess(res.data));
-            console.log(res)
+            dispatch(loadUser());
         } catch (err) {
+            dispatch(loginFail());
             console.log(err.message);
         }
 
     }
-};  
+};
+
+// LOAD USER USIN JWT
+
+const userLoaded = (payload) => {
+    return { type: USER_LOADED, payload };
+}
+
+const userLoadingFail = () => {
+    return { type: USER_LOADING_FAIL } ;
+}
+
+export const loadUser = () => {
+    if(localStorage.token){
+        setAutchToken(localStorage.token);
+    }
+    return async (dispatch) => {
+        try {
+            const res = await axios.get('/api/auth');
+            dispatch(userLoaded(res.data))
+        } catch (err) {
+            console.log(err);
+            dispatch(userLoadingFail());
+        }
+    }
+}

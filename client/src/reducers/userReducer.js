@@ -3,7 +3,9 @@ import { REGISTER_FAIL,
          CONFIRMATION_SUCCESS,
          CONFIRMATION_FAIL,    
          LOGIN_SUCCESS,
-         LOGIN_FAIL
+         LOGIN_FAIL,
+         USER_LOADED,
+         USER_LOADING_FAIL
             } from '../actions/constants';
 
 const initialState = {
@@ -27,9 +29,16 @@ const userReducer = (state = initialState, action) => {
                 token: action.payload.token,
                 isAuthenticated: true
             }
+        case USER_LOADED:
+            return {
+                ...state,
+                userData: action.payload
+            }
         case REGISTER_FAIL:
         case CONFIRMATION_FAIL:
         case LOGIN_FAIL:
+        case USER_LOADING_FAIL:
+            localStorage.removeItem('token');
             return {
                 token: null,
                 isAuthenticated: false,

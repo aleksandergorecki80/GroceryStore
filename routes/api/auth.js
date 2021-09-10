@@ -5,6 +5,8 @@ const User = require('../../models/UserModel');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const jwtSecret = config.get('jwtSecret');
+const authMid = require('../../middleware/authMid');
+
 
 // @route   PUT api/users
 // @desc    Log in a user and get token
@@ -36,6 +38,19 @@ router.post('/', async (req, res) => {
         console.error(err.message);
         return res.status(500).send('Server error');
     }
+});
+
+router.get('/', authMid, async (req, res) => {
+    try {
+        const user = await User.findOne({ _id: req.user._id}, { password: 0 });
+
+        res.json(user);
+
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).send('Server error');
+    }
+
 });
 
 

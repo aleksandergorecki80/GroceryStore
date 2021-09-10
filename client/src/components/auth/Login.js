@@ -3,27 +3,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Input, Button } from 'semantic-ui-react';
 import { loginUser } from '../../actions/userActions';
+import { Redirect } from 'react-router-dom';
+
+// Utils
+import { validateEmail, validatePasswords } from '../../utils/validation';
 
 const Login = ({ user, loginUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const regExPatterns = {
-    //eslint-disable-next-line
-    email: /^([a-z\d\.-]+)@([a-z\d\.-]+)\.([a-z]{2,8})(\.[a-z]{5,50})?$/,
-    password: /^[\w@-]{8,20}$/i, // w - any character a-z, A-Z, 0-9, including the _
-  };
+    if(user.isAuthenticated && user.userData !== null ){
+      return <Redirect to="/dashboard" />;
+    }
 
-  const validateEmail = (phrase) => {
-    return regExPatterns.email.test(phrase);
-  };
-
-  const validatePasswords = (phrase) => {
-    return regExPatterns.password.test(phrase);
-  };
 
   const onChangeEmail = (event) => {
     validateEmail(event.target.value)
@@ -40,13 +34,13 @@ const Login = ({ user, loginUser }) => {
   };
 
   const onSubmit = (event) => {
-      event.preventDefault();
-      const formData = {
-          email,
-          password
-      }
-      loginUser(formData);
-  }
+    event.preventDefault();
+    const formData = {
+      email,
+      password,
+    };
+    loginUser(formData);
+  };
 
   return (
     <div>
@@ -65,8 +59,7 @@ const Login = ({ user, loginUser }) => {
           name="password"
           onChange={(event) => onChangePassword(event)}
         ></Input>
-        <Button
-        >Log in</Button>
+        <Button>Log in</Button>
       </form>
     </div>
   );
@@ -82,9 +75,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loginUser: (formData) => {
       dispatch(loginUser(formData));
-    }
-  }
-}
+    },
+  };
+};
 
 Login.propTypes = {
   user: PropTypes.object.isRequired,
