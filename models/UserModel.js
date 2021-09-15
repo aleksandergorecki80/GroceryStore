@@ -20,7 +20,7 @@ const UserShema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: 'guest'
+        default: 'User'
     },
     isConfirmed: {
         type: Boolean,

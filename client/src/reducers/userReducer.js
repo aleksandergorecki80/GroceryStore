@@ -5,7 +5,8 @@ import { REGISTER_FAIL,
          LOGIN_SUCCESS,
          LOGIN_FAIL,
          USER_LOADED,
-         USER_LOADING_FAIL
+         USER_LOADING_FAIL,
+         LOGOUT
             } from '../actions/constants';
 
 const initialState = {
@@ -38,6 +39,7 @@ const userReducer = (state = initialState, action) => {
         case CONFIRMATION_FAIL:
         case LOGIN_FAIL:
         case USER_LOADING_FAIL:
+        case LOGOUT:
             localStorage.removeItem('token');
             return {
                 token: null,

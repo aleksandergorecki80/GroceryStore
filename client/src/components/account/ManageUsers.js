@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Dashboard = props => {
+const ManageUsers = props => {
     return (
         <div>
-            Dashboard
+            Manage users
         </div>
     );
 };
 
-Dashboard.propTypes = {
+ManageUsers.propTypes = {
     
 };
 
-export default Dashboard;
+export default ManageUsers;

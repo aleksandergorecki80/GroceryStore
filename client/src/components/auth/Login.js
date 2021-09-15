@@ -15,7 +15,7 @@ const Login = ({ user, loginUser }) => {
   const [passwordError, setPasswordError] = useState('');
 
     if(user.isAuthenticated && user.userData !== null ){
-      return <Redirect to="/dashboard" />;
+      return <Redirect to="/account" />;
     }
 
 

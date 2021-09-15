@@ -8,7 +8,8 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     USER_LOADED,
-    USER_LOADING_FAIL
+    USER_LOADING_FAIL,
+    LOGOUT
 } from './constants';
 
 import { setAlert } from './alertActions';
@@ -97,7 +98,7 @@ export const loginUser = (formData) => {
     }
 };
 
-// LOAD USER USIN JWT
+// LOAD USER USING JWT
 
 const userLoaded = (payload) => {
     return { type: USER_LOADED, payload };
@@ -120,4 +121,9 @@ export const loadUser = () => {
             dispatch(userLoadingFail());
         }
     }
+}
+
+// LOGOUT USER
+export const logout = () => {
+    return { type: LOGOUT };
 }
