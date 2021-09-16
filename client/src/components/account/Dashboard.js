@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ManageUsers from './ManageUsers';
+import ManageUsers from './../menageUsers/ManageUsers';
+import DisplayUserInfo from './DisplayUserInfo';
 
 
 const Dashboard = ({ user }) => {
     return (
         <div>
-            Dashboard
+            { user.userData && <DisplayUserInfo user={user.userData} /> }
             { user.userData && user.userData.status === 'Admin' && <ManageUsers />}
         </div>
     );

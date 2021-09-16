@@ -8,3 +8,5 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const USER_LOADED = 'USER_LOADED';
 export const USER_LOADING_FAIL = 'USER_LOADING_FAIL';
 export const LOGOUT = 'LOGOUT';
+export const USERS_LOADED = 'USERS_LOADED';
+export const USERS_LOADING_FAIL = 'USERS_LOADING_FAIL';

@@ -8,7 +8,35 @@ const emailData = config.get('emailData');
 const host = config.get('host');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
-const { findOne } = require('../../models/UserModel');
+const authMid = require('../../middleware/authMid');
+
+
+// @route   GET api/users
+// @desc    Get a list of users
+// @access  Private
+router.get('/', authMid, async (req, res) => {
+
+    try {
+        const user = await User.findOne({ _id: req.user._id });
+
+        if(user.status !== "Admin") {
+            return res.status(401).json({ msg: 'Access denied'});
+        }
+
+        const users = await User.find({ _id: { $ne: user._id } });
+
+        if(!users){
+            res.status(400).json({ msg: 'Users not found' });
+        }
+
+        res.send(users)
+    } catch(err) {
+        console.error(err.message);
+        return res.status(500).send('Server error');
+    }
+
+    
+}); 
 
 
 // @route   POST api/users
@@ -107,7 +135,7 @@ router.put('/confirmation/', async (req, res) => {
                 message: "User not found."
             });
         }
-        const user = await User.findOne({ _id: decoded.user._id}, { name: 1, email: 1, isConfirmed: 1, _id: 0 });
+        const user = await User.findOne({ _id: decoded.user._id}, { name: 1, email: 1, date: 1, isConfirmed: 1, _id: 0 });
         res.json({ 
             user,
             message: 'User confirmation succeded.'
