@@ -10,7 +10,7 @@ import { REGISTER_FAIL,
             } from '../actions/constants';
 
 const initialState = {
-    token: null,
+    token: localStorage.getItem('token'),
     isAuthenticated: false,
     userData: null,
 };

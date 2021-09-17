@@ -3,7 +3,7 @@ import { USERS_LOADED,
  } from "../actions/constants";
 
 const initialState = {
-    users: null
+    usersList: null
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -11,11 +11,11 @@ const usersReducer = (state = initialState, action) => {
         case USERS_LOADED:
             return {
                 ...state,
-                users: action.payload
+                usersList: action.payload
             }
         case USERS_LOADING_FAIL:
             return {
-                users: null
+                usersList: null
             }
         default:
             return state;

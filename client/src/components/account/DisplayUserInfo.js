@@ -3,37 +3,37 @@ import PropTypes from 'prop-types';
 
 const DisplayUserInfo = ({ user }) => {
   return (
-    <div class="ui card">
-      <div class="content">
-        <div class="header">{ user.name }</div>
+    <div className="ui card">
+      <div className="content">
+        <div className="header">{ user.name }</div>
       </div>
-      <div class="content">
-          <div class="ui small feed">
-          <div class="event">
-            <div class="content">
-              <div class="summary">
+      <div className="content">
+          <div className="ui small feed">
+          <div className="event">
+            <div className="content">
+              <div className="summary">
                 <p>{ user.email }</p>
               </div>
             </div>
           </div>
-          <div class="event">
-            <div class="content">
-              <div class="summary">
+          <div className="event">
+            <div className="content">
+              <div className="summary">
                 <p>{ user.status }</p>
               </div>
             </div>
           </div>
-          <div class="event">
-            <div class="content">
-              <div class="summary">
+          <div className="event">
+            <div className="content">
+              <div className="summary">
                 <p>Registered: { user.date.substring(0,10) }</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="extra content">
-        <button class="ui button">Change password</button>
+      <div className="extra content">
+        <button className="ui button">Change password</button>
       </div>
     </div>
   );
