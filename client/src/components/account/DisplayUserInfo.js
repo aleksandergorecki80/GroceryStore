@@ -5,7 +5,7 @@ const DisplayUserInfo = ({ user }) => {
   return (
     <div className="ui card">
       <div className="content">
-        <div className="header">{ user.name }</div>
+        <div className="header">You are logged in: { user.name }</div>
       </div>
       <div className="content">
           <div className="ui small feed">
@@ -33,7 +33,7 @@ const DisplayUserInfo = ({ user }) => {
         </div>
       </div>
       <div className="extra content">
-        <button className="ui button">Change password</button>
+        <button className="ui primary basic button">Change password</button>
       </div>
     </div>
   );
