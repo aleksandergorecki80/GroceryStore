@@ -14,7 +14,7 @@ function modalReducer(state, action) {
   }
 }
 
-const User = ({ user: { name, email, status, date } }) => {
+const User = ({ user: { _id, name, email, status, date } }) => {
   const [state, dispatch] = React.useReducer(modalReducer, {
     open: false,
     size: undefined,
@@ -81,7 +81,7 @@ const User = ({ user: { name, email, status, date } }) => {
         open={open}
         onClose={() => dispatch({ type: 'close' })}
       >
-        <UserModal dispatch={dispatch} modalProcess={modalProcess}/>
+        <UserModal dispatch={dispatch} modalProcess={modalProcess} _id={_id} name={name} />
       </Modal>
     </Fragment>
   );

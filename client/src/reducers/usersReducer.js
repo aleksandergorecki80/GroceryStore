@@ -1,9 +1,12 @@
 import { USERS_LOADED,
-    USERS_LOADING_FAIL
+    USERS_LOADING_FAIL,
+    USER_DELETED,
+    USER_DELETING_FAILED
  } from "../actions/constants";
 
 const initialState = {
-    usersList: null
+    usersList: null,
+    loading: true
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -17,6 +20,14 @@ const usersReducer = (state = initialState, action) => {
             return {
                 usersList: null
             }
+        case USER_DELETED:
+            return {
+                ...state,
+                usersList: state.usersList.filter((user) => {
+                    return user._id !== action.payload
+                })
+            }
+        case USER_DELETING_FAILED:
         default:
             return state;
     }

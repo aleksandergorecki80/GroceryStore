@@ -5,6 +5,7 @@ const app = express();
 // Import routes
 const users = require('./routes/api/users');
 const auth = require('./routes/api/auth');
+const admin = require('./routes/api/admin');
 
 // Connect DB
 connectDB();
@@ -16,6 +17,7 @@ app.use(express.json({ extended: false }));
 // Define routes
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+app.use('/api/admin', admin);
 
 console.log(process.env.NODE_ENV)
 
