@@ -25,6 +25,10 @@ const UserShema = new mongoose.Schema({
     isConfirmed: {
         type: Boolean,
         default: false
+    },
+    isBlocked: {
+        type: Boolean,
+        default: false
     }
 });
 

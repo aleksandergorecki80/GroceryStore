@@ -1,7 +1,9 @@
 import { USERS_LOADED,
     USERS_LOADING_FAIL,
     USER_DELETED,
-    USER_DELETING_FAILED
+    USER_DELETING_FAILED,
+    USER_BLOCKED_UNBLOCKED,
+    USER_BLOCKING_UNBLOCKING_FAILED
  } from "../actions/constants";
 
 const initialState = {
@@ -27,7 +29,18 @@ const usersReducer = (state = initialState, action) => {
                     return user._id !== action.payload
                 })
             }
+        case USER_BLOCKED_UNBLOCKED:
+            return {
+                ...state,
+                usersList: state.usersList.map((user) => {
+                    return user._id === action.payload.user_id 
+                        ? { ...user, isBlocked: !action.payload.isBlocked } 
+                        : { ...user }
+                    }
+                )
+            }
         case USER_DELETING_FAILED:
+        case USER_BLOCKING_UNBLOCKING_FAILED:
         default:
             return state;
     }

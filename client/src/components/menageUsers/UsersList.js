@@ -7,7 +7,7 @@ const UsersList = ({ users }) => {
       <h3>List of users</h3>
       <div className="ui relaxed divided list">
         {users &&
-          users.map((user, key) => {
+          users.map((user) => {
             return <User user={user} key={user.email}/>;
           })}
       </div>

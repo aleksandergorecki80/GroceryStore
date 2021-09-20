@@ -14,7 +14,7 @@ function modalReducer(state, action) {
   }
 }
 
-const User = ({ user: { _id, name, email, status, date } }) => {
+const User = ({ user: { _id, name, email, status, date, isBlocked } }) => {
   const [state, dispatch] = React.useReducer(modalReducer, {
     open: false,
     size: undefined,
@@ -39,6 +39,7 @@ const User = ({ user: { _id, name, email, status, date } }) => {
       <div className="ui card">
         <div className="content">
           <div className="header">{name}</div>
+
         </div>
         <div className="content">
           <div className="ui small feed">
@@ -59,6 +60,13 @@ const User = ({ user: { _id, name, email, status, date } }) => {
                 </div>
               </div>
             </div>
+            <div className="event">
+              <div className="content">
+                <div className="summary">
+                  {isBlocked && <p style={{color: "red"}}>User is blocked</p>}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="extra content">
@@ -69,7 +77,11 @@ const User = ({ user: { _id, name, email, status, date } }) => {
           <Button 
             className="ui yellow button"
             onClick={() => runOnClick(modalContents.BLOCK)}
-          >Block</Button>
+          >
+            
+            { !isBlocked ? <Fragment>Block</Fragment> : <Fragment>Unblock</Fragment>}
+          
+          </Button>
           <Button 
             className="ui red button"
             onClick={() => runOnClick(modalContents.DELETE)}
@@ -81,7 +93,7 @@ const User = ({ user: { _id, name, email, status, date } }) => {
         open={open}
         onClose={() => dispatch({ type: 'close' })}
       >
-        <UserModal dispatch={dispatch} modalProcess={modalProcess} _id={_id} name={name} />
+        <UserModal dispatch={dispatch} modalProcess={modalProcess} _id={_id} name={name} isBlocked={isBlocked} />
       </Modal>
     </Fragment>
   );

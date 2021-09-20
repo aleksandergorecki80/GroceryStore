@@ -3,7 +3,10 @@ import setAutchToken from "../utils/setAuthToken";
 import { USERS_LOADED, 
     USERS_LOADING_FAIL, 
     USER_DELETED, 
-    USER_DELETING_FAILED } from './constants';
+    USER_DELETING_FAILED,
+    USER_BLOCKED_UNBLOCKED,
+    USER_BLOCKING_UNBLOCKING_FAILED
+    } from './constants';
 
 
 
@@ -54,3 +57,28 @@ export const deleteUser = (user_id) => {
         }
     }
 }
+
+// BLOCK A USER
+const userBlocked = (payload) => {
+    return { type: USER_BLOCKED_UNBLOCKED, payload };
+}
+
+const userBlockingFailed = () => {
+    return { type: USER_BLOCKING_UNBLOCKING_FAILED };
+}
+
+export const blockUser = (payload) => {
+    if(localStorage.token){
+        setAutchToken(localStorage.token);
+    }
+    return async (dispatch) => {
+        try {
+            // axios reqest
+            dispatch(userBlocked(payload));
+        } catch(err) {
+            console.log(err);
+            dispatch(userBlockingFailed());
+        }
+    }
+}
+
