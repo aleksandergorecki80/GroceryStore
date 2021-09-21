@@ -73,8 +73,11 @@ export const blockUser = (payload) => {
     }
     return async (dispatch) => {
         try {
-            // axios reqest
-            dispatch(userBlocked(payload));
+            const result = await axios.put(`/api/admin/users/block/${payload.user_id}`);
+            console.log(result)
+            if(result.data.result.acknowledged === true){
+                dispatch(userBlocked(payload));
+            }
         } catch(err) {
             console.log(err);
             dispatch(userBlockingFailed());

@@ -27,7 +27,7 @@ router.get('/users', authMid, isAdmin, async (req, res) => {
 // @route   DELETE api/admin/:user_id
 // @desc    Delete a selected user
 // @access  Private, admin only
-router.delete('/users/:user_id', authMid, async (req, res) => {
+router.delete('/users/:user_id', authMid, isAdmin, async (req, res) => {
     try {
         
         const result = await User.deleteOne({ _id: req.params.user_id });
@@ -36,14 +36,32 @@ router.delete('/users/:user_id', authMid, async (req, res) => {
             res.status(400).json({ msg: 'Users not found' });
         }
 
-        res.status(200).json({ msg: 'Users deleted' });
+        res.status(200).json({ msg: 'User deleted' });
     } catch(err) {
         console.log(err.message);
         return res.status(500).send('Server error');
     }
-})
+});
 
 
-
+// @route   PUT api/admin/block/:user_id
+// @desc    Block a selected user
+// @access  Private, admin only
+router.put('/users/block/:user_id', authMid, isAdmin, async (req, res) => {
+    try {
+        const editedUser = await User.findOne({ _id: req.params.user_id }, { isBlocked: 1 });
+        const result = await User.updateOne({ _id: req.params.user_id }, {$set: {isBlocked: !editedUser.isBlocked} });
+        const message = (() => {
+            if (editedUser.isBlocked === true && result["acknowledged"] === true) return 'User unblocked.'
+            if (editedUser.isBlocked === false && result["acknowledged"] === true) return 'User blocked.'
+        })();
+        if (result["acknowledged"] === true) {
+            res.status(200).json({result, message});
+            }       
+    } catch (err) {
+        console.log(err.message);
+        return res.status(500).send('Server error'); 
+    }
+});
 
 module.exports = router;
