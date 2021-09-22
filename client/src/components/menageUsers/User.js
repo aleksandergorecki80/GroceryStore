@@ -50,7 +50,7 @@ const User = ({ user: { _id, name, email, status, date, isBlocked } }) => {
             </div>
             <div className="event">
               <div className="content">
-                <div className="summary">Status: {status}</div>
+                <div className="summary">Status: {`${status[0].toUpperCase()}${status.slice(1)}`}</div>
               </div>
             </div>
             <div className="event">
@@ -93,7 +93,7 @@ const User = ({ user: { _id, name, email, status, date, isBlocked } }) => {
         open={open}
         onClose={() => dispatch({ type: 'close' })}
       >
-        <UserModal dispatch={dispatch} modalProcess={modalProcess} _id={_id} name={name} isBlocked={isBlocked} />
+        <UserModal dispatch={dispatch} modalProcess={modalProcess} _id={_id} name={name} status={status} isBlocked={isBlocked} />
       </Modal>
     </Fragment>
   );

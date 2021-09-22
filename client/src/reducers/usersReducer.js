@@ -3,7 +3,9 @@ import { USERS_LOADED,
     USER_DELETED,
     USER_DELETING_FAILED,
     USER_BLOCKED_UNBLOCKED,
-    USER_BLOCKING_UNBLOCKING_FAILED
+    USER_BLOCKING_UNBLOCKING_FAILED,
+    UPDATE_SUCCESS,
+    UPDATE_FAIL
  } from "../actions/constants";
 
 const initialState = {
@@ -39,8 +41,22 @@ const usersReducer = (state = initialState, action) => {
                     }
                 )
             }
+        case UPDATE_SUCCESS: 
+        console.log(action)
+        break
+        return {
+            ...state,
+            usersList: state.usersList.map((user) => {
+                return user._id === action.payload.user_id
+                    ? { ...user, status: action.payload.status }
+                    : { ...user }
+            })
+        }
         case USER_DELETING_FAILED:
         case USER_BLOCKING_UNBLOCKING_FAILED:
+        case UPDATE_FAIL: 
+        console.log(action)
+        break
         default:
             return state;
     }
