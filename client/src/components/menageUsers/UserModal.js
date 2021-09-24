@@ -12,6 +12,7 @@ const UserModal = ({
   status,
   deleteUser,
   blockUser,
+  updateUser,
   isBlocked,
 }) => {
   const options = [
@@ -23,7 +24,9 @@ const UserModal = ({
   const [updatedStatus, setUpdatedStatus] = useState('');
   const formData = {
     user_id: _id,
-    status: updatedStatus
+    user: {
+      status: updatedStatus
+    }
   }
 
   const onDeleteBlockUser = (user_id) => {
@@ -41,7 +44,10 @@ const UserModal = ({
   };
 
   const onConfirmSelected = () => {
-    updateUser(formData);
+    if(modalProcess === 'Edit'){
+      updateUser(formData);
+    }
+    
     dispatch({ type: 'close' });
   }
 
@@ -116,7 +122,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateUser: (formData) => {
       dispatch(updateUser(formData));
-    },
+    }
   };
 };
 

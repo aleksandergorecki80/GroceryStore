@@ -66,6 +66,11 @@ export const deleteUser = (user_id) => {
   };
 };
 
+
+
+
+
+
 // BLOCK A USER
 const userBlocked = (payload) => {
   return { type: USER_BLOCKED_UNBLOCKED, payload };
@@ -74,6 +79,7 @@ const userBlocked = (payload) => {
 const userBlockingFailed = () => {
   return { type: USER_BLOCKING_UNBLOCKING_FAILED };
 };
+
 
 export const blockUser = (payload) => {
   if (localStorage.token) {
@@ -104,8 +110,26 @@ const updateFail = () => {
 };
 
 export const updateUser = (payload) => {
-  console.log(payload, 'payload');
-return async (dispatch) => {
-    dispatch(updateSuccess(payload));
-}
+  if (localStorage.token) {
+    setAutchToken(localStorage.token);
+  }
+  return async (dispatch) => {
+    try {
+      const result = await axios.put(
+        `/api/admin/users/edit/${payload.user_id}`, payload.user, config);
+      // if (result.data.result.acknowledged === true) {
+        dispatch(updateSuccess(payload));
+      // }
+    } catch (err) {
+      console.log(err);
+      dispatch(updateFail());
+    }
+  };
 };
+
+
+
+
+
+
+

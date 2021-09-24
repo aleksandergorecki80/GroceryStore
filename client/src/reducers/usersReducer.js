@@ -42,21 +42,17 @@ const usersReducer = (state = initialState, action) => {
                 )
             }
         case UPDATE_SUCCESS: 
-        console.log(action)
-        break
         return {
             ...state,
             usersList: state.usersList.map((user) => {
                 return user._id === action.payload.user_id
-                    ? { ...user, status: action.payload.status }
+                    ? { ...user, status: action.payload.user.status }
                     : { ...user }
             })
         }
         case USER_DELETING_FAILED:
         case USER_BLOCKING_UNBLOCKING_FAILED:
         case UPDATE_FAIL: 
-        console.log(action)
-        break
         default:
             return state;
     }

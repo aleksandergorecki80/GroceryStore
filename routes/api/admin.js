@@ -44,7 +44,7 @@ router.delete('/users/:user_id', authMid, isAdmin, async (req, res) => {
 });
 
 
-// @route   PUT api/admin/block/:user_id
+// @route   PUT api/admin/users/block/:user_id
 // @desc    Block a selected user
 // @access  Private, admin only
 router.put('/users/block/:user_id', authMid, isAdmin, async (req, res) => {
@@ -63,5 +63,12 @@ router.put('/users/block/:user_id', authMid, isAdmin, async (req, res) => {
         return res.status(500).send('Server error'); 
     }
 });
+
+// @route   PUT api/admin/users/edit/:user_id
+// @desc    Block a selected user
+// @access  Private, admin only
+router.put('/users/edit/:users_id', authMid, isAdmin, async (req, res) => {
+    res.send(req.params.users_id)
+}); 
 
 module.exports = router;
