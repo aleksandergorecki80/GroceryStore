@@ -55,7 +55,7 @@ router.put('/users/block/:user_id', authMid, isAdmin, async (req, res) => {
             if (editedUser.isBlocked === true && result["acknowledged"] === true) return 'User unblocked.'
             if (editedUser.isBlocked === false && result["acknowledged"] === true) return 'User blocked.'
         })();
-        if (result["acknowledged"] === true) {
+        if (result["modifiedCount"] !== 0) {
             res.status(200).json({result, message});
             }       
     } catch (err) {
@@ -68,7 +68,16 @@ router.put('/users/block/:user_id', authMid, isAdmin, async (req, res) => {
 // @desc    Block a selected user
 // @access  Private, admin only
 router.put('/users/edit/:users_id', authMid, isAdmin, async (req, res) => {
-    res.send(req.params.users_id)
+    try {
+        const result = await User.updateOne({ _id: req.params.users_id }, { $set: { status: req.body.status }});
+        if(result["modifiedCount"] !== 0) {
+            return res.status(200).json({ result, message: "User data updated."});
+        }
+            return res.status(400).json({ result, message: "Nothing has been changed"});
+    } catch (err) {
+        console.log(err.message);
+        return res.status(500).send('Server error'); 
+    }
 }); 
 
 module.exports = router;

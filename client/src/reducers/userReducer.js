@@ -33,6 +33,7 @@ const userReducer = (state = initialState, action) => {
         case USER_LOADED:
             return {
                 ...state,
+                isAuthenticated: true,
                 userData: action.payload
             }
         case REGISTER_FAIL:

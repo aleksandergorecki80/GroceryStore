@@ -25,9 +25,9 @@ const UserModal = ({
   const formData = {
     user_id: _id,
     user: {
-      status: updatedStatus
-    }
-  }
+      status: updatedStatus,
+    },
+  };
 
   const onDeleteBlockUser = (user_id) => {
     if (modalProcess === 'Block') {
@@ -44,12 +44,12 @@ const UserModal = ({
   };
 
   const onConfirmSelected = () => {
-    if(modalProcess === 'Edit'){
+    if (modalProcess === 'Edit') {
       updateUser(formData);
     }
-    
+
     dispatch({ type: 'close' });
-  }
+  };
 
   const deleteOrBlock = (
     <>
@@ -81,13 +81,27 @@ const UserModal = ({
       <Modal.Content>
         <Form>
           <Form.Group widths="equal">
-              <Form.Field label="Status" control="select" onChange={onChange}>
-                {options.map((element) => {
-                  if(element[0]) return <option value={element.value} key={element.key} disabled={true} selected hidden>{element.text}</option>
-                  return <option value={element.value} key={element.key}>{element.text}</option>
-                })}
-
-              </Form.Field>
+            <Form.Field label="Status" control="select" onChange={onChange}>
+              {options.map((element) => {
+                if (element[0])
+                  return (
+                    <option
+                      value={element.value}
+                      key={element.key}
+                      disabled={true}
+                    >
+                      {element.text}
+                    </option>
+                  );
+                return (
+                  status !== element.value && (
+                    <option value={element.value} key={element.key}>
+                      {element.text}
+                    </option>
+                  )
+                );
+              })}
+            </Form.Field>
           </Form.Group>
         </Form>
       </Modal.Content>
@@ -95,9 +109,15 @@ const UserModal = ({
         <Button negative onClick={() => dispatch({ type: 'close' })}>
           No
         </Button>
-        <Button positive onClick={() => onConfirmSelected()}>
-          Yes
-        </Button>
+        {updatedStatus ? (
+          <Button positive onClick={() => onConfirmSelected()}>
+            Yes
+          </Button>
+        ) : (
+          <button className="ui disabled button" disabled="" tabIndex="-1">
+            Yes
+          </button>
+        )}
       </Modal.Actions>
     </>
   );
@@ -122,7 +142,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateUser: (formData) => {
       dispatch(updateUser(formData));
-    }
+    },
   };
 };
 
