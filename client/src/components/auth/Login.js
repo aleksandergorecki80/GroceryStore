@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Input, Button } from 'semantic-ui-react';
 import { loginUser } from '../../actions/userActions';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 // Utils
 import { validateEmail, validatePasswords } from '../../utils/validation';
@@ -61,6 +61,7 @@ const Login = ({ user, loginUser }) => {
         ></Input>
         <Button>Log in</Button>
       </form>
+      <div><Link to="forgotpassword" >Forgot password</Link></div>
     </div>
   );
 };

@@ -6,7 +6,12 @@ import { REGISTER_FAIL,
          LOGIN_FAIL,
          USER_LOADED,
          USER_LOADING_FAIL,
-         LOGOUT
+         LOGOUT,
+         RESET_LINK_SENDING_SUCCESS,
+         TOKEN_CONFIRMED,
+         TOKEN_CONFIRMEATION_FAIL,
+         NEW_PASSWORD_SET_SUCCESS,
+         NEW_PASSWORD_SET_FAIL
             } from '../actions/constants';
 
 const initialState = {
@@ -36,10 +41,31 @@ const userReducer = (state = initialState, action) => {
                 isAuthenticated: true,
                 userData: action.payload
             }
+        case RESET_LINK_SENDING_SUCCESS:
+            return {
+                ...state,
+                userData: action.payload,
+                resetLinkSent: true
+            }
+        case TOKEN_CONFIRMED:
+            return {
+                ...state,
+                token: action.payload.token,
+                userData: action.payload.userData
+            }
+        case NEW_PASSWORD_SET_SUCCESS:
+            return {
+                token: null,
+                isAuthenticated: false,
+                userData: null,
+                passwordReset: true
+            }
+        case NEW_PASSWORD_SET_FAIL:
         case REGISTER_FAIL:
         case CONFIRMATION_FAIL:
         case LOGIN_FAIL:
         case USER_LOADING_FAIL:
+        case TOKEN_CONFIRMEATION_FAIL:
         case LOGOUT:
             localStorage.removeItem('token');
             return {

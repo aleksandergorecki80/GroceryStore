@@ -5,7 +5,6 @@ const authMid = require('../../middleware/authMid');
 const isAdmin = require('../../middleware/isAdmin');
 
 
-
 // @route   GET api/admin
 // @desc    Get a list of users
 // @access  Private, admin only
@@ -22,7 +21,6 @@ router.get('/users', authMid, isAdmin, async (req, res) => {
         return res.status(500).send('Server error');
     }   
 }); 
-
 
 // @route   DELETE api/admin/:user_id
 // @desc    Delete a selected user
@@ -42,7 +40,6 @@ router.delete('/users/:user_id', authMid, isAdmin, async (req, res) => {
         return res.status(500).send('Server error');
     }
 });
-
 
 // @route   PUT api/admin/users/block/:user_id
 // @desc    Block a selected user

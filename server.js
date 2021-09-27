@@ -6,6 +6,7 @@ const app = express();
 const users = require('./routes/api/users');
 const auth = require('./routes/api/auth');
 const admin = require('./routes/api/admin');
+const resetpassword = require('./routes/api/resetpassword');
 
 // Connect DB
 connectDB();
@@ -18,6 +19,7 @@ app.use(express.json({ extended: false }));
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/admin', admin);
+app.use('/api/resetpassword', resetpassword);
 
 console.log(process.env.NODE_ENV)
 

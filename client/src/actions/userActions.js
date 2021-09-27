@@ -9,7 +9,12 @@ import {
     LOGIN_FAIL,
     USER_LOADED,
     USER_LOADING_FAIL,
-    LOGOUT
+    LOGOUT,
+    RESET_LINK_SENDING_SUCCESS,
+    TOKEN_CONFIRMED,
+    TOKEN_CONFIRMEATION_FAIL,
+    NEW_PASSWORD_SET_SUCCESS,
+    NEW_PASSWORD_SET_FAIL
 } from './constants';
 
 import { setAlert } from './alertActions';
@@ -84,10 +89,11 @@ const loginFail = () => {
 };
 
 export const loginUser = (formData) => {
-    const body = JSON.stringify(formData)
+    const body = JSON.stringify(formData);
     return async (dispatch) => {
         try {
             const res = await axios.post('/api/auth', body, config);
+            console.log(res)
             dispatch(loginSuccess(res.data));
             dispatch(loadUser());
         } catch (err) {
@@ -126,4 +132,72 @@ export const loadUser = () => {
 // LOGOUT USER
 export const logout = () => {
     return { type: LOGOUT };
+}
+
+//  ===     RESET PASSWORD   == //
+//  REQUEST LINK 
+const resetLinkSuccess = (payload) => {
+    return { type: RESET_LINK_SENDING_SUCCESS, payload }
+}
+
+export const reqestResetLink = (formData) => {
+    const body = JSON.stringify(formData);
+    return async (dispatch) => {
+        try {
+            const res = await axios.post('/api/resetpassword', body, config);
+            console.log(res)
+            dispatch(resetLinkSuccess(res.data.user));
+            dispatch(setAlert(res.data.message));
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}
+
+// CONFIRM TOKEN
+
+const tokenConfirmed = (payload) => {
+    return { type: TOKEN_CONFIRMED, payload };
+}
+
+const tokenConfirmationFailed = () => {
+    return { type: TOKEN_CONFIRMEATION_FAIL };
+}
+
+export const confirmToken = (token) => {
+    return async (dispatch) => {
+        try {
+            const res = await axios.get(`/api/resetpassword/${token}`);
+            dispatch(tokenConfirmed({userData: res.data.user, token }));
+        } catch (err) {
+            console.log(err);
+            dispatch(tokenConfirmationFailed())
+        }
+    }
+}
+
+// SET NEW PASSWORD
+const newPasswordSetSuccess = () => {
+    return { type: NEW_PASSWORD_SET_SUCCESS }
+}
+
+const newPasswordSetFail = () => {
+    return { type: NEW_PASSWORD_SET_FAIL }
+}
+
+export const setNewPassword = (formData, token) => {
+        setAutchToken(token);
+    const body = JSON.stringify(formData);
+    return async (dispatch) => {
+        try {
+            const res = await axios.put('/api/resetpassword/set', body, config);
+            console.log(res)
+            if(res.data.result.modifiedCount === 0 ) return
+            dispatch(newPasswordSetSuccess())
+        } catch (err) {
+            console.log(err);
+            dispatch(newPasswordSetFail());
+        }
+    }
+
 }
