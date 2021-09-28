@@ -186,7 +186,7 @@ const newPasswordSetFail = () => {
 }
 
 export const setNewPassword = (formData, token) => {
-        setAutchToken(token);
+    token && setAutchToken(token);
     const body = JSON.stringify(formData);
     return async (dispatch) => {
         try {

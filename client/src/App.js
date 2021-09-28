@@ -10,6 +10,7 @@ import Login from './components/auth/Login';
 import Dashboard from './components/account/Dashboard';
 import ForgotPassword from './components/forgotpassword/ForgotPassword';
 import ResetPasswordForm from './components/forgotpassword/ResetPasswordForm';
+import ChangePassword from './components/account/ChangePassword';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -42,6 +43,7 @@ const App = () => {
             <Route exact path="/account" component={Dashboard} />
             <Route exact path="/forgotpassword" component={ForgotPassword} />
             <Route exact path="/resetpassword/:token" component={ResetPasswordForm} />
+            <Route exact path="/changepassword" component={ChangePassword} />
           </Switch>
         </Fragment>
       </Router>

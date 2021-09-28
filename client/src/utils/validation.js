@@ -6,13 +6,13 @@ const regExPatterns = {
   };
 
   export const validateEmail = (phrase) => {
-    return regExPatterns.email.test(phrase);
+    return phrase && regExPatterns.email.test(phrase);
   };
 
   export const validatePasswords = (phrase) => {
-    return regExPatterns.password.test(phrase);
+    return phrase && regExPatterns.password.test(phrase);
   };
 
   export const validateName = (phrase) => {
-    return regExPatterns.name.test(phrase);
+    return phrase && regExPatterns.name.test(phrase);
 }

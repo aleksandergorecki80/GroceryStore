@@ -18,6 +18,7 @@ const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
     userData: null,
+    passwordReset: false
 };
 
 const userReducer = (state = initialState, action) => {
@@ -33,7 +34,8 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 token: action.payload.token,
-                isAuthenticated: true
+                isAuthenticated: true,
+                passwordReset: false
             }
         case USER_LOADED:
             return {

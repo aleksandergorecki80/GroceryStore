@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const DisplayUserInfo = ({ user }) => {
   return (
@@ -33,7 +34,7 @@ const DisplayUserInfo = ({ user }) => {
         </div>
       </div>
       <div className="extra content">
-        <button className="ui primary basic button">Change password</button>
+        <Link to="changepassword" className="ui primary basic button" >Change password</Link>
       </div>
     </div>
   );

@@ -46,7 +46,6 @@ const ResetPasswordForm = ({ confirmToken, setNewPassword, user }) => {
     const formData = {
         password
     }
-    console.log(user.token)
     setNewPassword(formData, user.token);
   };
 
