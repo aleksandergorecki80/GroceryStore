@@ -50,6 +50,8 @@ export const registerUser = ({ name, email, password}) => {
             
         } catch (err) {
             dispatch(registerFail());
+            console.log(err)
+            // dispatch(setAlert(err.data.message));
         }
     }
 }

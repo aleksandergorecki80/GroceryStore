@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/userActions';
@@ -22,6 +22,9 @@ const Register = (props) => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [repeatPasswordError, setRepeatPasswordError] = useState(false);
+
+  const [errorsMessages, setErrorsMessages] = useState([]);
+
 
   if (props.user.userData) {
     return <Redirect to="/confirm" />;
@@ -53,11 +56,30 @@ const Register = (props) => {
     setRepeatPassword(event.target.value);
   };
 
+  const addError = (error) => {
+    setErrorsMessages([...errorsMessages, error]);
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
 
-    if (password !== repeatPassword) return;
-    if (nameError || emailError || passwordError || repeatPasswordError) return;
+    if (password !== repeatPassword) {
+     return addError('Passwords does not mach');
+    }
+
+    if (!name || !email || !password || !repeatPassword) {
+      return addError('Please fill in the form');
+    }
+
+    if (nameError || emailError || passwordError || repeatPasswordError){
+      return addError('Please fill in the form');
+    };
+
+
+
+ 
+
+    // if (nameError || emailError || passwordError || repeatPasswordError) return;
 
     // SENDING FORM
 
@@ -68,6 +90,7 @@ const Register = (props) => {
     };
     props.registerUser(formData);
   };
+  const uniq = [...new Set(errorsMessages)];
 
   return (
     <div>
@@ -104,6 +127,12 @@ const Register = (props) => {
           Submit
         </Button>
       </form>
+      <div>
+        {errorsMessages &&
+          uniq.map((element, key) => {
+            return <p key={key}>{element}</p>;
+          })}
+      </div>
     </div>
   );
 };

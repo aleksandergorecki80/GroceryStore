@@ -14,5 +14,6 @@ const regExPatterns = {
   };
 
   export const validateName = (phrase) => {
+    console.log(phrase)
     return phrase && regExPatterns.name.test(phrase);
 }
