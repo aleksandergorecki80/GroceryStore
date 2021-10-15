@@ -1,29 +1,52 @@
 const express = require('express');
-const connectDB = require('./db');
+const connectDB = require('./config/db');
 const app = express();
 
 // Import routes
-const users = require('./routes/api/users');
-const auth = require('./routes/api/auth');
-const admin = require('./routes/api/admin');
-const resetpassword = require('./routes/api/resetpassword');
+const users = require('./routes/users');
+const auth = require('./routes/auth');
+const admin = require('./routes/admin');
+const resetpassword = require('./routes/resetpassword');
+const products = require('./routes/products');
+
+// Import middleware
+const logger = require('./middleware/logger');
+const morgan = require('morgan');
 
 // Connect DB
 connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
+app.use(logger);
 
+// Dev logging middleware
+if (process.env.NODE_ENV === 'dev'){
+  app.use(morgan('dev'))
+}
 
 // Define routes
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/admin', admin);
 app.use('/api/resetpassword', resetpassword);
+app.use('/api/v1/products', products);
 
-console.log(process.env.NODE_ENV)
-
+// PRODUCTION STATIC ASSETS
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('./client/build'));
+    app.get('^(?!api\/)[\/\w\.\,-]*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, './client', 'build', 'index.html'));
+    });
+  }
+  
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => {
-    console.log(`Server started at port ${PORT}`);
+    console.log(`Server is running in ${process.env.NODE_ENV} mode at port ${PORT}`);
 });
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err, promise) => {
+  console.log(`Error: ${err} on ${promise}`);
+  server.close(() => process.exit(1));
+})

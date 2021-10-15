@@ -1,5 +1,5 @@
 const express = require('express');
-const User = require('../../models/UserModel');
+const User = require('../models/UserModel');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -8,7 +8,7 @@ const emailData = config.get('emailData');
 const host = config.get('host');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
-const authMid = require('../../middleware/authMid');
+const authMid = require('../middleware/authMid');
 
 // @route   POST api/resetpassword
 // @desc    Get a link to reset a password

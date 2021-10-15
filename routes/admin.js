@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../../models/UserModel');
-const authMid = require('../../middleware/authMid');
-const isAdmin = require('../../middleware/isAdmin');
+const User = require('../models/UserModel');
+const authMid = require('../middleware/authMid');
+const isAdmin = require('../middleware/isAdmin');
 
 
 // @route   GET api/admin

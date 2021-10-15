@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const User = require('../../models/UserModel');
+const User = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const jwtSecret = config.get('jwtSecret');
-const authMid = require('../../middleware/authMid');
+const authMid = require('../middleware/authMid');
 
 
 // @route   PUT api/users
