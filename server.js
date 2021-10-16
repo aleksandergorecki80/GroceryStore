@@ -17,7 +17,7 @@ const morgan = require('morgan');
 connectDB();
 
 // Init Middleware
-app.use(express.json({ extended: false }));
+app.use(express.json());
 app.use(logger);
 
 // Dev logging middleware

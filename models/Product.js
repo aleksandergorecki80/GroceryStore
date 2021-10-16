@@ -5,7 +5,8 @@ const ProductShema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a title.'],
     trim: true,
-    maxlength: [50, 'Title can not be more than 50 characters.']
+    maxlength: [50, 'Title can not be more than 50 characters.'],
+    unique: true
   },
   slug: String,
   description: {
